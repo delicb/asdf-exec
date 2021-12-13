@@ -141,7 +141,16 @@ func GetExecutablePath(executable Executable) (string, error) {
 		return exePath, nil
 	}
 
-	rawBinPaths, err := exec.Command("bash", listBinPath).Output()
+	bashPath, err := exec.LookPath("bash")
+	if err != nil {
+		return "", err
+	}
+	cmd := &exec.Cmd{
+		Path: bashPath,
+		Args: []string{bashPath, listBinPath},
+		Env: []string{"ASDF_INSTALL_VERSION=2"},
+	}
+	rawBinPaths, err := cmd.Output()
 	if err != nil {
 		return "", err
 	}
