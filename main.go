@@ -18,7 +18,7 @@ func findExecutablePath() (string, error) {
 		return "", err
 	}
 	if !found {
-		return "", fmt.Errorf("%s not found", shim)
+		return "", fmt.Errorf("%s not found! Add default to ~/.tool-versions file", shim)
 	}
 	return executablePath, nil
 }
